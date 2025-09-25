@@ -7,12 +7,12 @@ class Solution {
             Arrays.fill(i,Integer.MAX_VALUE);
         }
         for (int j = 0; j < n; j++) {
-            ans = Math.min(ans, minFallRecur(matrix, n - 1, j,dp));
+            ans = Math.min(ans, minFall(matrix, n - 1, j,dp));
         }
         return ans;
     }
 
-    private int minFallRecur(int[][] matrix, int i, int j,int[][] dp) {
+    private int minFall(int[][] matrix, int i, int j,int[][] dp) {
         // Out of bounds
         if (j < 0 || j >= matrix.length) {
             return Integer.MAX_VALUE;
@@ -25,9 +25,9 @@ class Solution {
         }
 
         // Use long to avoid overflow
-        long u  = (long) matrix[i][j] + minFallRecur(matrix, i - 1, j,dp);
-        long ld = (long) matrix[i][j] + minFallRecur(matrix, i - 1, j - 1,dp);
-        long rd = (long) matrix[i][j] + minFallRecur(matrix, i - 1, j + 1,dp);
+        long u  = (long) matrix[i][j] + minFall(matrix, i - 1, j,dp);
+        long ld = (long) matrix[i][j] + minFall(matrix, i - 1, j - 1,dp);
+        long rd = (long) matrix[i][j] + minFall(matrix, i - 1, j + 1,dp);
 
         return dp[i][j]=(int) Math.min(u, Math.min(ld, rd));
     }
