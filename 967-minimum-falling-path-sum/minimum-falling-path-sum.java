@@ -1,26 +1,25 @@
 class Solution {
     public int minFallingPathSum(int[][] matrix) {
         int n = matrix.length;
-        int ans = Integer.MAX_VALUE;
-        int[][] dp= new int[n][n];
-        // for(int[] i:dp){
-        //     Arrays.fill(i,Integer.MAX_VALUE);
-        // }
-        // for (int j = 0; j < n; j++) {
-        //     ans = Math.min(ans, minFall(matrix, n - 1, j,dp));
-        // }
-        for(int j=0;j<n;j++){
-            dp[0][j]=matrix[0][j];
+        int[][] dp = new int[n][n];
+
+        // Base case: first row is same as matrix
+        for (int j = 0; j < n; j++) {
+            dp[0][j] = matrix[0][j];
         }
-        for(int i=1;i<n;i++){
-            for(int j=0;j<n;j++){
-                long u  = matrix[i][j] + dp[i-1][j];
-                long ld = (j > 0) ? matrix[i][j] + dp[i-1][j-1] : Integer.MAX_VALUE;
-                long rd = (j<n-1) ? matrix[i][j] + dp[i-1][j+1] : Integer.MAX_VALUE;
-               
-                dp[i][j]=(int)Math.min(u, Math.min(ld,rd));
+
+        // Fill dp table
+        for (int i = 1; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                int up = matrix[i][j] + dp[i - 1][j];
+                int ld = (j > 0) ? matrix[i][j] + dp[i - 1][j - 1] : Integer.MAX_VALUE;
+                int rd = (j < n - 1) ? matrix[i][j] + dp[i - 1][j + 1] : Integer.MAX_VALUE;
+
+                dp[i][j] = Math.min(up, Math.min(ld, rd));
             }
         }
+
+        // Result: minimum in last row
         int mini = Integer.MAX_VALUE;
         for (int j = 0; j < n; j++) {
             mini = Math.min(mini, dp[n - 1][j]);
@@ -28,6 +27,8 @@ class Solution {
 
         return mini;
     }
+}
+
 
     // private int minFall(int[][] matrix, int i, int j,int[][] dp) {
     //     // Out of bounds
@@ -52,4 +53,3 @@ class Solution {
     
     
 
-}
